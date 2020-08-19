@@ -35,8 +35,8 @@ class SearchReservation(unittest.TestCase):
 
     def tearDown(self):
         print('* * * End * * *')
-        # self.driver.quit()
-        time.sleep(30)
+        self.driver.quit()
+        time.sleep(5)
 
     # 使用ddt方法
     @ddt.data(*testdata)
