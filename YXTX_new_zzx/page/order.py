@@ -18,7 +18,7 @@ class SearchOrder(Base):
             # 不存在时就跳过
             print("不存在'待支付的订单'")
         else:
-            print('存在待支付订单')
+            print('存在待支付订单——>取消')
             click_x.click()
             # 点击首页的订单按钮
             self.click_element("xpath", "//*[@text='订单']/../../*[@class='android.view.ViewGroup'][3]")
@@ -51,10 +51,10 @@ class SearchOrder(Base):
                            '.ViewGroup/android.view.ViewGroup[1]')
         # 点击汽车票查询
         self.click_element('xpath', '//android.widget.TextView[@text="汽车票查询"]')
-        time.sleep(3)
+        time.sleep(2)
         # 点击明天
         self.click_element('xpath', '//android.widget.TextView[@text="明天"]')
-        time.sleep(3)
+        time.sleep(2)
         # 点击第一趟车
         self.driver.find_element_by_xpath(
             "//android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup["
@@ -84,7 +84,7 @@ class SearchOrder(Base):
         except:
             # 如果不存在服务费就返回 票价金额、总金额的值
             print('票价为：', price)
-            print('总金额：', totalamout)
+            print('总金额为：', totalamout)
             return int(price), int(totalamout)
 
     # 立即支付
@@ -102,7 +102,7 @@ class SearchOrder(Base):
             no_need.click()
             time.sleep(2)
         finally:
-            time.sleep(2)
+            time.sleep(5)
             self.driver.back()
 
     # 查看订单信息内容
@@ -118,7 +118,7 @@ class SearchOrder(Base):
     def is_adress(self):
         try:
             # 如果存在发车地址就执行else
-            self.driver.find_element("xpath", "//*[@text='发车地址']")
+            self.driver.find_element("xpath", "//*[@text='发车地址 :']")
         except:
             # 不存在发车地址返回True
             print("该站点不存在发车地址")
@@ -128,8 +128,9 @@ class SearchOrder(Base):
                 # 如果存在发车地址就点击地址进入导航页面
                 self.click_element("xpath", "//*[@text='发车地址 :']/..//*[@class='android.view.ViewGroup'][1]")
                 self.driver.find_element("xpath", "//*[@text='开始导航']")
+                time.sleep(2)
                 self.driver.back()
-                print("点击发车地址进入导航页面")
+                print("地址正常，点击发车地址进入导航页面")
                 return True
             except:
                 print("存在发车地址，但信息为空")
